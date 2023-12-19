@@ -71,5 +71,3 @@ To use this project, follow these steps:
 ## Server Information
 
 The API is served at: [http://127.0.0.1:8000/schema/](http://127.0.0.1:8000/schema/)
-
-Feel free to explore and contribute to this Django Ecommerce API!
