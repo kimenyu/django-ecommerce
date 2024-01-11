@@ -136,117 +136,117 @@ class ProductDeleteView(DestroyAPIView):
         """
         instance.delete()
 
-# class CategoryCreateView(CreateAPIView):
-#     """
-#     CreateAPIView for creating a new category.
+class CategoryCreateView(CreateAPIView):
+    """
+    CreateAPIView for creating a new category.
 
-#     HTTP Methods:
-#     - POST: Create a new category.
+    HTTP Methods:
+    - POST: Create a new category.
 
-#     Request Data:
-#     - JSON object containing category details.
+    Request Data:
+    - JSON object containing category details.
 
-#     Response:
-#     - 201 Created: Category created successfully.
-#     - 400 Bad Request: Invalid data provided.
-#     """
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    Response:
+    - 201 Created: Category created successfully.
+    - 400 Bad Request: Invalid data provided.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-#     def perform_create(self, serializer):
-#         """
-#         Perform the creation of a new category instance.
+    def perform_create(self, serializer):
+        """
+        Perform the creation of a new category instance.
 
-#         Parameters:
-#         - `serializer` (CategorySerializer): The serializer instance.
+        Parameters:
+        - `serializer` (CategorySerializer): The serializer instance.
 
-#         Returns:
-#         - None
-#         """
-#         serializer.save()
+        Returns:
+        - None
+        """
+        serializer.save()
 
-# class CategoryListView(ListAPIView):
-#     """
-#     ListAPIView for retrieving a list of categories.
+class CategoryListView(ListAPIView):
+    """
+    ListAPIView for retrieving a list of categories.
 
-#     HTTP Methods:
-#     - GET: Retrieve a list of categories.
+    HTTP Methods:
+    - GET: Retrieve a list of categories.
 
-#     Response:
-#     - 200 OK: Returns a list of categories.
-#     """
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    Response:
+    - 200 OK: Returns a list of categories.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-# class CategoryDetailView(RetrieveAPIView):
-#     """
-#     RetrieveAPIView for retrieving details of a specific category.
+class CategoryDetailView(RetrieveAPIView):
+    """
+    RetrieveAPIView for retrieving details of a specific category.
 
-#     HTTP Methods:
-#     - GET: Retrieve details of a specific category.
+    HTTP Methods:
+    - GET: Retrieve details of a specific category.
 
-#     Response:
-#     - 200 OK: Returns details of the requested category.
-#     - 404 Not Found: Category not found.
-#     """
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    Response:
+    - 200 OK: Returns details of the requested category.
+    - 404 Not Found: Category not found.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-# class CategoryUpdateView(UpdateAPIView):
-#     """
-#     UpdateAPIView for updating details of a specific category.
+class CategoryUpdateView(UpdateAPIView):
+    """
+    UpdateAPIView for updating details of a specific category.
 
-#     HTTP Methods:
-#     - PUT/PATCH: Update details of a specific category.
+    HTTP Methods:
+    - PUT/PATCH: Update details of a specific category.
 
-#     Request Data:
-#     - JSON object containing updated category details.
+    Request Data:
+    - JSON object containing updated category details.
 
-#     Response:
-#     - 200 OK: Category updated successfully.
-#     - 400 Bad Request: Invalid data provided.
-#     - 404 Not Found: Category not found.
-#     """
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    Response:
+    - 200 OK: Category updated successfully.
+    - 400 Bad Request: Invalid data provided.
+    - 404 Not Found: Category not found.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-#     def perform_update(self, serializer):
-#         """
-#         Perform the update of an existing category instance.
+    def perform_update(self, serializer):
+        """
+        Perform the update of an existing category instance.
 
-#         Parameters:
-#         - `serializer` (CategorySerializer): The serializer instance.
+        Parameters:
+        - `serializer` (CategorySerializer): The serializer instance.
 
-#         Returns:
-#         - None
-#         """
-#         serializer.save()
+        Returns:
+        - None
+        """
+        serializer.save()
 
-# class CategoryDeleteView(DestroyAPIView):
-#     """
-#     DestroyAPIView for deleting a specific category.
+class CategoryDeleteView(DestroyAPIView):
+    """
+    DestroyAPIView for deleting a specific category.
 
-#     HTTP Methods:
-#     - DELETE: Delete a specific category.
+    HTTP Methods:
+    - DELETE: Delete a specific category.
 
-#     Response:
-#     - 204 No Content: Category deleted successfully.
-#     - 404 Not Found: Category not found.
-#     """
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    Response:
+    - 204 No Content: Category deleted successfully.
+    - 404 Not Found: Category not found.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-#     def perform_destroy(self, instance):
-#         """
-#         Perform the deletion of an existing category instance.
+    def perform_destroy(self, instance):
+        """
+        Perform the deletion of an existing category instance.
 
-#         Parameters:
-#         - `instance` (Category): The existing category instance to delete.
+        Parameters:
+        - `instance` (Category): The existing category instance to delete.
 
-#         Returns:
-#         - None
-#         """
-#         instance.delete()
+        Returns:
+        - None
+        """
+        instance.delete()
 
 class CartCreateView(CreateAPIView):
     """

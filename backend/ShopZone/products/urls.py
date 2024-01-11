@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView
+from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView
 
 app_name = 'products'
 
@@ -12,11 +12,11 @@ urlpatterns = [
     path('update/<int:pk>/', ProductUpdateView.as_view(), name='update-product'),
     path('delete/<int:pk>/', ProductDeleteView.as_view(), name='delete-product'),
 
-    # path('category/create/', CategoryCreateView.as_view(), name='create-category'),
-    # path('category/list/', CategoryListView.as_view(), name='list-category'),
-    # path('category/detail/<int:pk>/', CategoryDetailView.as_view(), name='detail-category'),
-    # path('category/update/<int:pk>/', CategoryUpdateView.as_view(), name='update-category'),
-    # path('category/delete/<int:pk>/', CategoryDeleteView.as_view(), name='delete-category'),
+    path('category/create/', CategoryCreateView.as_view(), name='create-category'),
+    path('category/list/', CategoryListView.as_view(), name='list-category'),
+    path('category/detail/<int:pk>/', CategoryDetailView.as_view(), name='detail-category'),
+    path('category/update/<int:pk>/', CategoryUpdateView.as_view(), name='update-category'),
+    path('category/delete/<int:pk>/', CategoryDeleteView.as_view(), name='delete-category'),
 
     path('cart/', CartItemListView.as_view(), name='cart'),
     path('cart-item/create/', CartItemCreateView.as_view(), name='create-cart-item'),
@@ -41,6 +41,8 @@ urlpatterns = [
     path('contact-info/update/<int:pk>/', ContactInfoUpdateView.as_view(), name='update-contact-info'),
     path('contact-info/delete/<int:pk>/', ContactInfoDeleteView.as_view(), name='delete-contact-info'),
 ]
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

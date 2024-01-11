@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 	'rest_framework.authtoken',
     'phonenumber_field',
     'products',
+    'drf_yasg',
 ]
 
 ROOT_URLCONF = 'ShopZone.urls'
@@ -156,6 +157,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+
 }
 
 # REST_FRAMEWORK = {
