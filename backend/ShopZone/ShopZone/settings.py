@@ -48,11 +48,12 @@ INSTALLED_APPS = [
 	"corsheaders",
  	'rest_framework_simplejwt',
 	'rest_framework_simplejwt.token_blacklist',
-	'rest_framework.authtoken',
     'phonenumber_field',
     'products',
     'drf_yasg',
     'django_daraja',
+    'rest_framework.authtoken',
+    'rest_auth'
 ]
 
 ROOT_URLCONF = 'ShopZone.urls'
@@ -173,21 +174,15 @@ REST_FRAMEWORK = {
 #     'PAGE_SIZE': 3
 # }
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated'
-#     ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#          'rest_framework.authentication.TokenAuthentication',
-#     ),
-# }
+
 
 # AUTHENTICATION_BACKENDS = (
 #     'social_core.backends.google.GoogleOAuth2',
 #     'social_core.backends.facebook.FacebookOAuth2',
 #     'django.contrib.auth.backends.ModelBackend'
 # )
+
+
 
 
 SIMPLE_JWT = {

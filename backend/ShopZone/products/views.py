@@ -9,6 +9,9 @@ from rest_framework import permissions
 from django_daraja.mpesa.core import MpesaClient
 from .pagination import SmallSetPagination
 from .permissions import IsAdminUserorReadOnly
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
 # Create your views here.
 def index(request):
@@ -74,8 +77,7 @@ class ProductListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = SmallSetPagination
-    permission_classes = [IsAdminUserorReadOnly]
-
+    
 
 
     def get_queryset(self):
@@ -104,6 +106,7 @@ class ProductDetailView(RetrieveAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
 
 class ProductUpdateView(UpdateAPIView):
     """
@@ -122,6 +125,7 @@ class ProductUpdateView(UpdateAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
         """
@@ -148,6 +152,7 @@ class ProductDeleteView(DestroyAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_destroy(self, instance):
         """
@@ -177,6 +182,7 @@ class CategoryCreateView(CreateAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_create(self, serializer):
         """
@@ -202,6 +208,7 @@ class CategoryListView(ListAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryDetailView(RetrieveAPIView):
     """
@@ -216,6 +223,7 @@ class CategoryDetailView(RetrieveAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryUpdateView(UpdateAPIView):
     """
@@ -234,6 +242,7 @@ class CategoryUpdateView(UpdateAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
         """
@@ -260,6 +269,7 @@ class CategoryDeleteView(DestroyAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_destroy(self, instance):
         """
@@ -289,6 +299,7 @@ class CartCreateView(CreateAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         """
@@ -314,6 +325,7 @@ class CartListView(ListAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class CartDetailView(RetrieveAPIView):
     """
@@ -328,6 +340,7 @@ class CartDetailView(RetrieveAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class CartUpdateView(UpdateAPIView):
     """
@@ -346,6 +359,7 @@ class CartUpdateView(UpdateAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_update(self, serializer):
         """
@@ -372,6 +386,7 @@ class CartDeleteView(DestroyAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_destroy(self, instance):
         """
@@ -401,6 +416,7 @@ class CartItemCreateView(CreateAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         """
@@ -426,6 +442,8 @@ class CartItemListView(ListAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
     
 class CartItemDetailView(RetrieveAPIView):
     """
@@ -440,6 +458,8 @@ class CartItemDetailView(RetrieveAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class CartItemUpdateView(UpdateAPIView):
     """
@@ -458,6 +478,8 @@ class CartItemUpdateView(UpdateAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_update(self, serializer):
         """
@@ -484,6 +506,8 @@ class CartItemDeleteView(DestroyAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         """
@@ -513,6 +537,8 @@ class ContactInfoCreateView(CreateAPIView):
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_create(self, serializer):
         """
@@ -538,6 +564,8 @@ class ContactInfoListView(ListAPIView):
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class ContactInfoDetailView(RetrieveAPIView):
     """
@@ -552,6 +580,8 @@ class ContactInfoDetailView(RetrieveAPIView):
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class ContactInfoUpdateView(UpdateAPIView):
     """
@@ -570,6 +600,8 @@ class ContactInfoUpdateView(UpdateAPIView):
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_update(self, serializer):
         """
@@ -596,6 +628,8 @@ class ContactInfoDeleteView(DestroyAPIView):
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         """
@@ -625,6 +659,8 @@ class ProfileCreateView(CreateAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_create(self, serializer):
         """
@@ -650,6 +686,8 @@ class ProfileListView(ListAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class ProfileDetailView(RetrieveAPIView):
     """
@@ -664,6 +702,8 @@ class ProfileDetailView(RetrieveAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
     
 class ProfileUpdateView(UpdateAPIView):
     """
@@ -682,6 +722,8 @@ class ProfileUpdateView(UpdateAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_update(self, serializer):
         """
@@ -708,6 +750,8 @@ class ProfileDeleteView(DestroyAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         """
@@ -737,6 +781,8 @@ class OrderCreateView(CreateAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_create(self, serializer):
         """
@@ -762,6 +808,8 @@ class OrderListView(ListAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class OrderDetailView(RetrieveAPIView):
     """
@@ -776,6 +824,8 @@ class OrderDetailView(RetrieveAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class OrderUpdateView(UpdateAPIView):
     """
@@ -794,6 +844,8 @@ class OrderUpdateView(UpdateAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_update(self, serializer):
         """
@@ -820,6 +872,8 @@ class OrderDeleteView(DestroyAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         """
