@@ -1,11 +1,17 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from . import views
 from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView
 
 app_name = 'products'
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    path('daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
+
+    
+    
     path('create/', ProductCreateView.as_view(), name='create-product'),
     path('list/', ProductListView.as_view(), name='list-product'),
     path('detail/<int:pk>/', ProductDetailView.as_view(), name='detail-product'),

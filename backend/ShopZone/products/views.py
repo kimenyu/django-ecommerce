@@ -1,11 +1,32 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import path
+from . import views
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from .models import Product, Category, Cart, CartItem, ContactInfo, Profile, Order
 from .serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializer, ContactInfoSerializer, ProfileSerializer, OrderSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions 
+from django_daraja.mpesa.core import MpesaClient
+from .pagination import SmallSetPagination
+from .permissions import IsAdminUserorReadOnly
 
 # Create your views here.
+def index(request):
+    cl = MpesaClient()
+    # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
+    phone_number = '0793058968'
+    amount = 1
+    account_reference = 'reference'
+    transaction_desc = 'Description'
+    callback_url = 'https://api.darajambili.com/express-payment';
+    response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+    return HttpResponse(response)
+
+def stk_push_callback(request):
+        data = request.body
+        
+        return HttpResponse("STK Push in Django👋")
+
 
 class ProductCreateView(CreateAPIView):
     """
@@ -23,7 +44,7 @@ class ProductCreateView(CreateAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAdminUserorReadOnly]
 
     def perform_create(self, serializer):
         """
@@ -52,6 +73,10 @@ class ProductListView(ListAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    pagination_class = SmallSetPagination
+    permission_classes = [IsAdminUserorReadOnly]
+
+
 
     def get_queryset(self):
         """
@@ -60,7 +85,7 @@ class ProductListView(ListAPIView):
         Returns:
         - Queryset: Filtered queryset based on query parameters.
         """
-        queryset = Product.objects.all()
+        queryset = Product.objects.all().order_by("-id")
         name = self.request.query_params.get('name', None)
         if name is not None:
             queryset = queryset.filter(name__icontains=name)
