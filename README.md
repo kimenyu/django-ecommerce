@@ -36,5 +36,3 @@ To use this project, follow these steps:
     ```bash
     python manage.py runserver
     ```
-
-Now, you should have the Django Ecommerce API up and running locally. Feel free to explore the provided endpoints and customize the project according to your needs.
