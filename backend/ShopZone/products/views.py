@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import path
+from django_filters import rest_framework as filters
+from rest_framework import filters
 from . import views
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from .models import Product, Category, Cart, CartItem, ContactInfo, Profile, Order
@@ -13,6 +15,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import permissions
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 # Create your views here.
 def index(request):
@@ -79,8 +83,8 @@ class ProductListView(ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = SmallSetPagination
     permission_classes = [permissions.AllowAny]
-    
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
     def get_queryset(self):
         """
@@ -94,6 +98,7 @@ class ProductListView(ListAPIView):
         if name is not None:
             queryset = queryset.filter(name__icontains=name)
         return queryset
+
 
 class ProductDetailView(RetrieveAPIView):
     """

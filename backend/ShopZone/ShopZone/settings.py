@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_daraja',
     'rest_framework.authtoken',
-    'rest_auth'
+    'rest_auth',
+    'django_filters',
+
 ]
 
 ROOT_URLCONF = 'ShopZone.urls'
@@ -215,6 +217,8 @@ DJOSER = {
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     }
 }
+
+
 
 
 # Default primary key field type
