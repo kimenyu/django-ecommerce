@@ -83,8 +83,9 @@ class ProductListView(ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = SmallSetPagination
     permission_classes = [permissions.AllowAny]
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
+    ordering_fields = '__all__'
 
     def get_queryset(self):
         """
