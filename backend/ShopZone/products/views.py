@@ -11,6 +11,7 @@ from .pagination import SmallSetPagination
 from .permissions import IsAdminUserorReadOnly
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from rest_framework import permissions
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
 # Create your views here.
@@ -77,6 +78,7 @@ class ProductListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = SmallSetPagination
+    permission_classes = [permissions.AllowAny]
     
 
 
