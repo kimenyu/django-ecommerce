@@ -84,7 +84,7 @@ class ProductDetailView(RetrieveAPIView):
 class ProductUpdateView(UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
         serializer.save()
@@ -92,7 +92,7 @@ class ProductUpdateView(UpdateAPIView):
 class ProductDeleteView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -100,7 +100,7 @@ class ProductDeleteView(DestroyAPIView):
 class CategoryCreateView(CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -108,17 +108,17 @@ class CategoryCreateView(CreateAPIView):
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryDetailView(RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryUpdateView(UpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
         serializer.save()
@@ -136,7 +136,7 @@ class CategoryDeleteView(DestroyAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_destroy(self, instance):
         """
@@ -166,7 +166,7 @@ class CartCreateView(CreateAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         """
@@ -192,7 +192,7 @@ class CartListView(ListAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 class CartDetailView(RetrieveAPIView):
     """
@@ -207,7 +207,7 @@ class CartDetailView(RetrieveAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 class CartUpdateView(UpdateAPIView):
     """
@@ -226,7 +226,7 @@ class CartUpdateView(UpdateAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def perform_update(self, serializer):
         """
@@ -253,7 +253,7 @@ class CartDeleteView(DestroyAPIView):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def perform_destroy(self, instance):
         """
@@ -283,7 +283,7 @@ class CartItemCreateView(CreateAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         """
@@ -309,7 +309,7 @@ class CartItemListView(ListAPIView):
     """
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     
 class CartItemDetailView(RetrieveAPIView):

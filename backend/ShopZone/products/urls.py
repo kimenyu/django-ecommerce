@@ -2,8 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
-from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView, OrderItemCreateView, OrderItemListView, OrderItemDetailView, OrderItemUpdateView, OrderItemDeleteView
-
+from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView, OrderItemCreateView, OrderItemListView, OrderItemDetailView, OrderItemUpdateView, OrderItemDeleteView, CartCreateView, CartListView, CartDetailView, CartUpdateView, CartDeleteView
 app_name = 'products'
 
 urlpatterns = [
@@ -28,6 +27,12 @@ urlpatterns = [
     path('cart-item/create/', CartItemCreateView.as_view(), name='create-cart-item'),
     path('cart-item/delete/<int:pk>/', CartItemDeleteView.as_view(), name='delete-cart-item'),
     path('cart-item/update/<int:pk>/', CartItemUpdateView.as_view(), name='update-cart-item'),
+    
+    path('cart/create/', CartCreateView.as_view(), name='create-cart'),
+    path('cart/list/', CartListView.as_view(), name='list-cart'),
+    path('cart/detail/<int:pk>/', CartDetailView.as_view(), name='detail-cart'),
+    path('cart/update/<int:pk>/', CartUpdateView.as_view(), name='update-cart'),
+    path('cart/delete/<int:pk>/', CartDeleteView.as_view(), name='delete-cart'),
 
     path('profile/', ProfileListView.as_view(), name='profile'),
     path('profile/create/', ProfileCreateView.as_view(), name='create-profile'),

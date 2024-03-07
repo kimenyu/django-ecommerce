@@ -53,13 +53,9 @@ class Order(models.Model):
         if not self.contact_info:
             profile = self.user.profile
             self.contact_info = profile.contact_info
-        super().save(*args, **kwargs)
-        
-    def save(self, *args, **kwargs):
         # Calculate total_amount by summing up the total cost of all order items
         self.total_amount = sum(item.get_total_cost() for item in self.items.all())
         super().save(*args, **kwargs)
-
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
@@ -69,3 +65,16 @@ class OrderItem(models.Model):
     
     def get_total_cost(self):
         return self.quantity * self.price
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    contact_info = models.OneToOneField(ContactInfo, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    address = models.TextField()
+    phone_number = PhoneNumberField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.contact_info:
+            self.contact_info = ContactInfo.objects.create()
+        super().save(*args, **kwargs)
