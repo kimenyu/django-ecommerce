@@ -30,8 +30,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include("rest_framework.urls")),
-    # path('auth/', include('djoser.urls')),
-    # path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
     # path('auth/', include('djoser.social.urls')),
     # path('auth/', include('djoser.urls.authtoken')),
     path('products/', include('products.urls')),

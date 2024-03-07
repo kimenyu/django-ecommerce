@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
-from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView
+from .views import ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, ProductDeleteView, CartItemListView, CartItemCreateView, CartItemDeleteView, CartItemUpdateView, OrderCreateView, OrderListView, OrderDetailView, OrderUpdateView, OrderDeleteView, ContactInfoCreateView, ContactInfoListView, ContactInfoDetailView, ContactInfoUpdateView, ContactInfoDeleteView, ProfileListView, ProfileCreateView, ProfileDetailView, ProfileUpdateView, ProfileDeleteView, CategoryCreateView, CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView, OrderItemCreateView, OrderItemListView, OrderItemDetailView, OrderItemUpdateView, OrderItemDeleteView
 
 app_name = 'products'
 
@@ -46,6 +46,12 @@ urlpatterns = [
     path('contact-info/detail/<int:pk>/', ContactInfoDetailView.as_view(), name='detail-contact-info'),
     path('contact-info/update/<int:pk>/', ContactInfoUpdateView.as_view(), name='update-contact-info'),
     path('contact-info/delete/<int:pk>/', ContactInfoDeleteView.as_view(), name='delete-contact-info'),
+    
+    path('order-item/create/', OrderItemCreateView.as_view(), name='create-order-item'),
+    path('order-item/list/', OrderItemListView.as_view(), name='list-order-item'),
+    path('order-item/detail/<int:pk>/', OrderItemDetailView.as_view(), name='detail-order-item'),
+    path('order-item/update/<int:pk>/', OrderItemUpdateView.as_view(), name='update-order-item'),
+    path('order-item/delete/<int:pk>/', OrderItemDeleteView.as_view(), name='delete-order-item'),
 ]
 
 

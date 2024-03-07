@@ -5,8 +5,8 @@ from django_filters import rest_framework as filters
 from rest_framework import filters
 from . import views
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
-from .models import Product, Category, Cart, CartItem, ContactInfo, Profile, Order
-from .serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializer, ContactInfoSerializer, ProfileSerializer, OrderSerializer
+from .models import Product, Category, Cart, CartItem, ContactInfo, Profile, Order, OrderItem
+from .serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializer, ContactInfoSerializer, ProfileSerializer, OrderSerializer, OrderItemSerializer
 from rest_framework import permissions 
 from django_daraja.mpesa.core import MpesaClient
 from .pagination import SmallSetPagination
@@ -37,22 +37,9 @@ def stk_push_callback(request):
 
 
 class ProductCreateView(CreateAPIView):
-    """
-    CreateAPIView for creating a new product.
-
-    HTTP Methods:
-    - POST: Create a new product.
-
-    Request Data:
-    - JSON object containing product details.
-
-    Response:
-    - 201 Created: Product created successfully.
-    - 400 Bad Request: Invalid data provided.
-    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminUserorReadOnly]
+    # permission_classes = [IsAdminUserorReadOnly]
 
     def perform_create(self, serializer):
         """
@@ -67,18 +54,6 @@ class ProductCreateView(CreateAPIView):
         serializer.save()
 
 class ProductListView(ListAPIView):
-    """
-    ListAPIView for retrieving a list of products.
-
-    HTTP Methods:
-    - GET: Retrieve a list of products.
-
-    Query Parameters:
-    - `name` (optional): Filter products by name.
-
-    Response:
-    - 200 OK: Returns a list of products.
-    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = SmallSetPagination
@@ -102,166 +77,50 @@ class ProductListView(ListAPIView):
 
 
 class ProductDetailView(RetrieveAPIView):
-    """
-    RetrieveAPIView for retrieving details of a specific product.
-
-    HTTP Methods:
-    - GET: Retrieve details of a specific product.
-
-    Response:
-    - 200 OK: Returns details of the requested product.
-    - 404 Not Found: Product not found.
-    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
 
 class ProductUpdateView(UpdateAPIView):
-    """
-    UpdateAPIView for updating details of a specific product.
-
-    HTTP Methods:
-    - PUT/PATCH: Update details of a specific product.
-
-    Request Data:
-    - JSON object containing updated product details.
-
-    Response:
-    - 200 OK: Product updated successfully.
-    - 400 Bad Request: Invalid data provided.
-    - 404 Not Found: Product not found.
-    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
-        """
-        Perform the update of an existing product instance.
-
-        Parameters:
-        - `serializer` (ProductSerializer): The serializer instance.
-
-        Returns:
-        - None
-        """
         serializer.save()
 
 class ProductDeleteView(DestroyAPIView):
-    """
-    DestroyAPIView for deleting a specific product.
-
-    HTTP Methods:
-    - DELETE: Delete a specific product.
-
-    Response:
-    - 204 No Content: Product deleted successfully.
-    - 404 Not Found: Product not found.
-    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUserorReadOnly]
 
     def perform_destroy(self, instance):
-        """
-        Perform the deletion of an existing product instance.
-
-        Parameters:
-        - `instance` (Product): The existing product instance to delete.
-
-        Returns:
-        - None
-        """
         instance.delete()
 
 class CategoryCreateView(CreateAPIView):
-    """
-    CreateAPIView for creating a new category.
-
-    HTTP Methods:
-    - POST: Create a new category.
-
-    Request Data:
-    - JSON object containing category details.
-
-    Response:
-    - 201 Created: Category created successfully.
-    - 400 Bad Request: Invalid data provided.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUserorReadOnly]
 
     def perform_create(self, serializer):
-        """
-        Perform the creation of a new category instance.
-
-        Parameters:
-        - `serializer` (CategorySerializer): The serializer instance.
-
-        Returns:
-        - None
-        """
         serializer.save()
 
 class CategoryListView(ListAPIView):
-    """
-    ListAPIView for retrieving a list of categories.
-
-    HTTP Methods:
-    - GET: Retrieve a list of categories.
-
-    Response:
-    - 200 OK: Returns a list of categories.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryDetailView(RetrieveAPIView):
-    """
-    RetrieveAPIView for retrieving details of a specific category.
-
-    HTTP Methods:
-    - GET: Retrieve details of a specific category.
-
-    Response:
-    - 200 OK: Returns details of the requested category.
-    - 404 Not Found: Category not found.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUserorReadOnly]
 
 class CategoryUpdateView(UpdateAPIView):
-    """
-    UpdateAPIView for updating details of a specific category.
-
-    HTTP Methods:
-    - PUT/PATCH: Update details of a specific category.
-
-    Request Data:
-    - JSON object containing updated category details.
-
-    Response:
-    - 200 OK: Category updated successfully.
-    - 400 Bad Request: Invalid data provided.
-    - 404 Not Found: Category not found.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUserorReadOnly]
 
     def perform_update(self, serializer):
-        """
-        Perform the update of an existing category instance.
-
-        Parameters:
-        - `serializer` (CategorySerializer): The serializer instance.
-
-        Returns:
-        - None
-        """
         serializer.save()
 
 class CategoryDeleteView(DestroyAPIView):
@@ -889,6 +748,126 @@ class OrderDeleteView(DestroyAPIView):
 
         Parameters:
         - `instance` (Order): The existing order instance to delete.
+
+        Returns:
+        - None
+        """
+        instance.delete()
+        
+class OrderItemCreateView(CreateAPIView):
+    """
+    CreateAPIView for creating a new order item.
+
+    HTTP Methods:
+    - POST: Create a new order item.
+
+    Request Data:
+    - JSON object containing order item details.
+
+    Response:
+    - 201 Created: Order item created successfully.
+    - 400 Bad Request: Invalid data provided.
+    """
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def perform_create(self, serializer):
+        """
+        Perform the creation of a new order item instance.
+
+        Parameters:
+        - `serializer` (OrderItemSerializer): The serializer instance.
+
+        Returns:
+        - None
+        """
+        serializer.save()
+        
+class OrderItemListView(ListAPIView):
+    """
+    ListAPIView for retrieving a list of order items.
+
+    HTTP Methods:
+    - GET: Retrieve a list of order items.
+
+    Response:
+    - 200 OK: Returns a list of order items.
+    """
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+class OrderItemDetailView(RetrieveAPIView):
+    """
+    RetrieveAPIView for retrieving details of a specific order item.
+
+    HTTP Methods:
+    - GET: Retrieve details of a specific order item.
+
+    Response:
+    - 200 OK: Returns details of the requested order item.
+    - 404 Not Found: Order item not found.
+    """
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+class OrderItemUpdateView(UpdateAPIView):
+    """
+    UpdateAPIView for updating details of a specific order item.
+
+    HTTP Methods:
+    - PUT/PATCH: Update details of a specific order item.
+
+    Request Data:
+    - JSON object containing updated order item details.
+
+    Response:
+    - 200 OK: Order item updated successfully.
+    - 400 Bad Request: Invalid data provided.
+    - 404 Not Found: Order item not found.
+    """
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def perform_update(self, serializer):
+        """
+        Perform the update of an existing order item instance.
+
+        Parameters:
+        - `serializer` (OrderItemSerializer): The serializer instance.
+
+        Returns:
+        - None
+        """
+        serializer.save()
+        
+class OrderItemDeleteView(DestroyAPIView):
+    """
+    DestroyAPIView for deleting a specific order item.
+
+    HTTP Methods:
+    - DELETE: Delete a specific order item.
+
+    Response:
+    - 204 No Content: Order item deleted successfully.
+    - 404 Not Found: Order item not found.
+    """
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def perform_destroy(self, instance):
+        """
+        Perform the deletion of an existing order item instance.
+
+        Parameters:
+        - `instance` (OrderItem): The existing order item instance to delete.
 
         Returns:
         - None

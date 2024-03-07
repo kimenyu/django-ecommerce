@@ -1,9 +1,6 @@
 from django.db import models
-from accounts.models import UserAccount
+from accounts.models import CustomUser
 from phonenumber_field.modelfields import PhoneNumberField
-
-
-# Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -23,7 +20,7 @@ class Product(models.Model):
         return self.name
 
 class Cart(models.Model):
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class CartItem(models.Model):
@@ -35,17 +32,9 @@ class CartItem(models.Model):
         return self.quantity * self.product.price
 
 class ContactInfo(models.Model):
-    user = models.OneToOneField(UserAccount, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     email = models.EmailField(max_length=255, null=True, blank=True)
-    
-class Profile(models.Model):
-    user = models.OneToOneField(UserAccount, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_name = models.CharField(max_length=100, null=True, blank=True)
-    contact_info = models.ForeignKey(ContactInfo, on_delete=models.CASCADE, null=True, blank=True)
     phone_number = PhoneNumberField(blank=True, null=True)
-
-    address = models.CharField(max_length=255, null=True, blank=True)
 
 class Order(models.Model):
     STATUS_CHOICES = (
@@ -53,7 +42,7 @@ class Order(models.Model):
         ('shipped', 'Shipped'),
         ('delivered', 'Delivered'),
     )
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='orders')
     total_amount = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -65,4 +54,18 @@ class Order(models.Model):
             profile = self.user.profile
             self.contact_info = profile.contact_info
         super().save(*args, **kwargs)
+        
+    def save(self, *args, **kwargs):
+        # Calculate total_amount by summing up the total cost of all order items
+        self.total_amount = sum(item.get_total_cost() for item in self.items.all())
+        super().save(*args, **kwargs)
 
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    
+    def get_total_cost(self):
+        return self.quantity * self.price
