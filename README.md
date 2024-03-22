@@ -36,3 +36,4 @@ To use this project, follow these steps:
     ```bash
     python manage.py runserver
     ```
+order functionality not completed 
